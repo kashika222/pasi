@@ -1,0 +1,9 @@
+# Deterministic NLP dictionaries (scaffold — populate during NLP phase).
+
+version: v1
+
+analytics_terms: []
+ai_terms: []
+talent_terms: []
+innovation_terms: []
+role_taxonomy: {}

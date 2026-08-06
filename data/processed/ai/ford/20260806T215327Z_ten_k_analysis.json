@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "company_id": "ford",
+  "company_name": "Ford",
+  "source_type": "ten_k",
+  "document_path": "data/raw/ford/ten_k/20260806T200625Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:53:27.326322Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 0,
+      "confidence": 0.7,
+      "evidence_quotes": [],
+      "rationale": "The document text contains no evidence or mention of executive leadership commitment to analytics or data-driven decision-making."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 0,
+      "confidence": 0.7,
+      "evidence_quotes": [],
+      "rationale": "There is no discussion of investments in analytics, data science, software engineering, or technical talent in the provided text."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "actively pursue innovation in every part of our business.",
+        "hands-free highway driving system, BlueCruise."
+      ],
+      "rationale": "The document provides partial evidence of innovation through general statements about pursuing innovation and specific references to driver-assistance technologies like BlueCruise."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 0,
+      "confidence": 0.7,
+      "evidence_quotes": [],
+      "rationale": "The document does not outline or mention an enterprise analytics or data infrastructure strategy."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 0,
+      "confidence": 0.6,
+      "evidence_quotes": [],
+      "rationale": "While autonomous driving technology and artificial intelligence are noted in regulatory and product feature contexts, no corporate AI strategy is articulated."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 1,
+      "confidence": 0.75,
+      "evidence_quotes": [
+        "including telematics and EV charging solutions.",
+        "Software updates are increasingly a component of vehicle service and may be performed during warranty coverage repairs, through field service actions, or through over-the-air updates."
+      ],
+      "rationale": "The text shows partial evidence of digital capabilities, such as offering fleet telematics solutions and using over-the-air software updates for vehicle maintenance."
+    }
+  },
+  "overall_confidence": 0.7,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 5281502,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 768854,
+      "sent_char_count": 59999
+    },
+    "model_notes": "The document is a portion of a 10-K filing focused heavily on automotive sales volume, regulatory compliance, emissions standards, and safety requirements. Consequently, signals related to broader organizational analytics, AI strategy, and workforce investments are minimal or absent.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/ford/20260806T215327Z_ten_k_analysis.json"
+  },
+  "errors": []
+}

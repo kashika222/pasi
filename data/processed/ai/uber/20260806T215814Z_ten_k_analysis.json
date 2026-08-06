@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "company_id": "uber",
+  "company_name": "Uber",
+  "source_type": "ten_k",
+  "document_path": "data/raw/uber/ten_k/20260806T200621Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:58:14.717441Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 0,
+      "confidence": 0.3,
+      "evidence_quotes": [],
+      "rationale": "The document primarily discusses financial results, legal risks, and operational metrics without providing evidence of leadership initiatives focused on analytics or data capabilities."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 1,
+      "confidence": 0.6,
+      "evidence_quotes": [
+        "compensation costs, including stock-based compensation, for employees in engineering, design and product development"
+      ],
+      "rationale": "The report highlights ongoing investments and headcount increases within engineering and product development, though it does not specifically detail investments in analytics or data science roles."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "We are also developing technologies designed to provide new solutions to solve everyday problems.",
+        "equipped with Nuro’s Level 4 autonomous driving systems"
+      ],
+      "rationale": "Uber demonstrates commitment to technology innovation through internal product development and investments/agreements surrounding autonomous driving systems."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "We collect and analyze operating and financial data to evaluate the health of our business and assess our performance."
+      ],
+      "rationale": "The company describes gathering and evaluating key operating metrics like MAPCs, Trips, and Gross Bookings to support financial and operational decision-making, though a formal enterprise analytics strategy is not detailed."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 1,
+      "confidence": 0.6,
+      "evidence_quotes": [
+        "equipped with Nuro’s Level 4 autonomous driving systems",
+        "net unrealized gain on our Waabi investment"
+      ],
+      "rationale": "The text references agreements and investments related to Level 4 autonomous driving technologies, reflecting partial evidence of AI integration without detailing a broader enterprise AI framework."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "commercial technology agreements with vendors for cloud computing services",
+        "support and development of the internal technology infrastructure"
+      ],
+      "rationale": "The company maintains large multi-year commitments to cloud computing vendors and ongoing investments in core internal platform infrastructure."
+    }
+  },
+  "overall_confidence": 0.65,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 3177126,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 655084,
+      "sent_char_count": 60000
+    },
+    "model_notes": "The document is a financial 10-K report focusing heavily on operating results, legal challenges, and segment performance. Signals for analytics and technology infrastructure are present but tied mostly to standard R&D, cloud spending, and autonomous vehicle partnerships.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/uber/20260806T215814Z_ten_k_analysis.json"
+  },
+  "errors": []
+}

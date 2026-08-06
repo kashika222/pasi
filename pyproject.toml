@@ -1,0 +1,56 @@
+[project]
+name = "pasi"
+version = "0.1.0"
+description = "Public Analytics Signal Index (PASI) — AI-assisted assessment of organizational analytics maturity from public signals."
+readme = "README.md"
+requires-python = ">=3.12"
+license = { text = "MIT" }
+authors = [
+  { name = "Kashika Chopra" },
+]
+keywords = [
+  "analytics",
+  "maturity",
+  "nlp",
+  "llm",
+  "business-analytics",
+]
+dependencies = [
+  "pydantic>=2.7",
+  "pydantic-settings>=2.3",
+  "pyyaml>=6.0",
+  "python-dotenv>=1.0",
+  "streamlit>=1.36",
+  "requests>=2.32",
+  "openai>=1.40",
+  "plotly>=5.22",
+  "duckdb>=1.0",
+  "pandas>=2.2",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.2",
+  "ruff>=0.5",
+]
+
+[project.scripts]
+pasi = "pasi.cli:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv]
+package = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"

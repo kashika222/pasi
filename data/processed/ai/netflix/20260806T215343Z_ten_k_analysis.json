@@ -1,0 +1,81 @@
+{
+  "schema_version": "1.0",
+  "company_id": "netflix",
+  "company_name": "Netflix",
+  "source_type": "ten_k",
+  "document_path": "data/raw/netflix/ten_k/20260806T200620Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:53:43.206652Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 0,
+      "confidence": 0.85,
+      "evidence_quotes": [],
+      "rationale": "The provided text does not contain evidence of executive or leadership commitment to analytics or data initiatives."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 1,
+      "confidence": 0.65,
+      "evidence_quotes": [
+        "technology personnel responsible for making improvements to our service offerings, including testing, maintaining and modifying our user interface, our recommendations and infrastructure."
+      ],
+      "rationale": "The document notes personnel-related cost increases for technology teams responsible for infrastructure and recommendations, though specific analytics roles or hiring programs are not detailed."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 1,
+      "confidence": 0.65,
+      "evidence_quotes": [
+        "testing, maintaining and modifying our user interface, our recommendations and infrastructure."
+      ],
+      "rationale": "The company mentions ongoing testing and modifications to its recommendations engine and user interface, reflecting incremental technological iteration."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 1,
+      "confidence": 0.6,
+      "evidence_quotes": [
+        "testing, maintaining and modifying our user interface, our recommendations and infrastructure."
+      ],
+      "rationale": "Operational dependence on recommendation systems is noted, but there is no explicit discussion of an overarching analytics or data strategy."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 0,
+      "confidence": 0.85,
+      "evidence_quotes": [],
+      "rationale": "The provided text does not explicitly mention artificial intelligence or an AI strategy."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 0,
+      "confidence": 0.8,
+      "evidence_quotes": [],
+      "rationale": "While Netflix operates a digital streaming platform, the document does not discuss any active or ongoing digital transformation initiatives."
+    }
+  },
+  "overall_confidence": 0.73,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 2137739,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 315925,
+      "sent_char_count": 60000
+    },
+    "model_notes": "The evaluation is based strictly on the provided Form 10-K excerpt, which primarily focuses on financial results, content obligations, and general technology expenses without detailed discussion of analytics or AI initiatives.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/netflix/20260806T215343Z_ten_k_analysis.json"
+  },
+  "errors": []
+}

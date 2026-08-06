@@ -1,0 +1,91 @@
+{
+  "schema_version": "1.0",
+  "company_id": "amplitude",
+  "company_name": "Amplitude",
+  "source_type": "ten_k",
+  "document_path": "data/raw/amplitude/ten_k/20260806T200627Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:52:41.754290Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 0,
+      "confidence": 0.5,
+      "evidence_quotes": [],
+      "rationale": "The document does not provide direct evidence of executive leadership commitment specifically toward internal analytics governance or data culture."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 2,
+      "confidence": 0.9,
+      "evidence_quotes": [
+        "In June 2025, we completed an asset acquisition of Inari to accelerate our AI roadmap, leveraging their team’s deep expertise in applied AI.",
+        "we believe that attracting the best engineering talent will continue to be critical to our long-term success."
+      ],
+      "rationale": "Amplitude demonstrates strong talent investment through talent acquisitions and hiring focused on software engineering and applied AI expertise."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 2,
+      "confidence": 0.95,
+      "evidence_quotes": [
+        "In June 2025, we introduced Amplitude AI Agents, which turn Amplitude into a team of specialized experts that work 24/7 to analyze user behavior, run experiments, and optimize digital experiences.",
+        "In November 2025, we launched AI Feedback, the industry’s first customer feedback engine with a proprietary LLM process that automatically turns raw input into prioritized, actionable insights.",
+        "In December 2025, we launched Amplitude's Automated Insights that can replicate an expert's standard analysis process in a fraction of the time."
+      ],
+      "rationale": "The company presents extensive evidence of continuous product innovation, launching multiple AI-driven analytics features and acquiring novel technologies throughout 2024 and 2025."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 2,
+      "confidence": 0.9,
+      "evidence_quotes": [
+        "At the core of our AI Analytics Platform is our Behavioral Graph, a proprietary, purpose-built behavioral database that is the largest of its kind.",
+        "We architected our Behavioral Graph to power numerous products, beginning with our core product analytics solution."
+      ],
+      "rationale": "Amplitude outlines a clear analytics strategy centered around its proprietary Behavioral Graph and AI Analytics Platform to convert user event data into actionable business outcomes."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 2,
+      "confidence": 0.95,
+      "evidence_quotes": [
+        "In June 2025, we completed an asset acquisition of Inari to accelerate our AI roadmap, leveraging their team’s deep expertise in applied AI.",
+        "In October 2025, we launched Amplitude MCP server that enables teams to analyze product data, experiments, and user behavior using conversational AI.",
+        "In November 2025, we launched AI Feedback, the industry’s first customer feedback engine with a proprietary LLM process that automatically turns raw input into prioritized, actionable insights."
+      ],
+      "rationale": "The filing details a clear AI strategy supported by strategic acquisitions and product rollouts incorporating LLMs, conversational AI, and autonomous AI agents."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "Our customers span across industries and sizes, from the leading digital innovators to those earlier in their digital transformation journey."
+      ],
+      "rationale": "The document references supporting customer digital transformation journeys, but does not provide specific details regarding internal operational digital transformation initiatives."
+    }
+  },
+  "overall_confidence": 0.85,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 4154748,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 450512,
+      "sent_char_count": 60000
+    },
+    "model_notes": "As a commercial AI Analytics Platform vendor, Amplitude's 10-K heavily details its customer-facing product analytics strategy, AI development roadmap, and product innovation, while internal organizational analytics processes receive limited discussion.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/amplitude/20260806T215241Z_ten_k_analysis.json"
+  },
+  "errors": []
+}

@@ -1,0 +1,25 @@
+# PASI rubric stub — indicators to be finalized before scoring logic.
+
+version: v1
+score_scale: [0, 1, 2]
+
+pillars:
+  - id: leadership_strategy
+    name: Leadership & strategy
+    indicators: []
+
+  - id: talent_investment
+    name: Talent investment
+    indicators: []
+
+  - id: strategic_communication
+    name: Strategic communication
+    indicators: []
+
+  - id: employee_perception
+    name: Employee perception
+    indicators: []
+
+  - id: innovation_signals
+    name: Innovation signals
+    indicators: []

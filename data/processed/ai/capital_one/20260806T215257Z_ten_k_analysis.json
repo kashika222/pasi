@@ -1,0 +1,85 @@
+{
+  "schema_version": "1.0",
+  "company_id": "capital_one",
+  "company_name": "Capital One",
+  "source_type": "ten_k",
+  "document_path": "data/raw/capital_one/ten_k/20260806T200629Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:52:57.518025Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 0,
+      "confidence": 0.5,
+      "evidence_quotes": [],
+      "rationale": "The document discusses general business strategy, regulatory oversight, and corporate governance, but does not provide specific evidence of leadership commitment to analytics or data initiatives."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 1,
+      "confidence": 0.6,
+      "evidence_quotes": [
+        "Our ability to compete depends, in part, on our ability to attract and retain our associates and on our reputation as well as our ability to keep pace with innovation, in particular in the development of new technology platforms."
+      ],
+      "rationale": "The company notes the importance of attracting and retaining associates to keep pace with innovation and technology development, though it does not explicitly detail investments in data or analytics talent."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "We also explore opportunities to acquire technology companies and related assets to improve our information technology infrastructure and to deliver on our digital strategy.",
+        "Our ability to compete depends, in part, on our ability to attract and retain our associates and on our reputation as well as our ability to keep pace with innovation, in particular in the development of new technology platforms."
+      ],
+      "rationale": "The text demonstrates partial evidence of an innovation focus by discussing acquisitions of technology companies to build infrastructure and developing new technology platforms to keep pace with market innovation."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 1,
+      "confidence": 0.6,
+      "evidence_quotes": [
+        "The Transaction enables the Company to leverage its newly acquired networks, customer base, technology, and data ecosystem to drive value for merchants, consumers and small businesses."
+      ],
+      "rationale": "The company notes plans to leverage an expanded data ecosystem post-acquisition to create value, but does not outline a detailed overarching analytics strategy."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 0,
+      "confidence": 0.5,
+      "evidence_quotes": [],
+      "rationale": "The provided document text contains no discussion or evidence of an artificial intelligence or machine learning strategy."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "We also explore opportunities to acquire technology companies and related assets to improve our information technology infrastructure and to deliver on our digital strategy.",
+        "we service banking customer accounts through digital channels and our network of branch locations, cafés, call centers and automated teller machines (“ATMs”)."
+      ],
+      "rationale": "The document explicitly refers to delivering on a 'digital strategy', improving IT infrastructure via tech acquisitions, and serving banking customers through digital channels."
+    }
+  },
+  "overall_confidence": 0.6,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 9213649,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 1067825,
+      "sent_char_count": 60000
+    },
+    "model_notes": "The document is a standard SEC Form 10-K excerpt primarily covering regulatory environment, business overview, and acquisitions (Discover, Brex). It contains general signals regarding technology infrastructure, digital strategy, and data ecosystems, but lacks granular detail on specialized analytics or AI initiatives.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/capital_one/20260806T215257Z_ten_k_analysis.json"
+  },
+  "errors": []
+}

@@ -1,0 +1,89 @@
+# Company cohort configuration.
+
+meta:
+  study: public-analytics-signal-index
+  rubric_version: v1
+  collection_window_start: null
+  collection_window_end: null
+
+companies:
+  - id: snowflake
+    name: Snowflake
+    ticker: SNOW
+    segment: data_platform
+    industry: software
+    proxy_label: presumed_leader
+    careers_url: "https://careers.snowflake.com/"
+
+  - id: databricks
+    name: Databricks
+    ticker: null
+    segment: data_platform
+    industry: software
+    proxy_label: presumed_leader
+    careers_url: "https://www.databricks.com/company/careers"
+    notes: "Private company — no SEC 10-K via EDGAR."
+
+  - id: netflix
+    name: Netflix
+    ticker: NFLX
+    segment: digital_product
+    industry: media
+    proxy_label: presumed_leader
+    careers_url: "https://jobs.netflix.com/"
+
+  - id: uber
+    name: Uber
+    ticker: UBER
+    segment: digital_product
+    industry: mobility
+    proxy_label: peer
+    careers_url: "https://www.uber.com/careers/"
+
+  - id: airbnb
+    name: Airbnb
+    ticker: ABNB
+    segment: digital_product
+    industry: travel
+    proxy_label: peer
+    careers_url: "https://careers.airbnb.com/"
+
+  - id: spotify
+    name: Spotify
+    ticker: SPOT
+    segment: digital_product
+    industry: media
+    proxy_label: peer
+    careers_url: "https://www.lifeatspotify.com/"
+
+  - id: ford
+    name: Ford
+    ticker: F
+    segment: traditional_regulated
+    industry: automotive
+    proxy_label: peer
+    careers_url: "https://corporate.ford.com/careers.html"
+
+  - id: eli_lilly
+    name: Eli Lilly
+    ticker: LLY
+    segment: traditional_regulated
+    industry: pharmaceuticals
+    proxy_label: peer
+    careers_url: "https://careers.lilly.com/"
+
+  - id: amplitude
+    name: Amplitude
+    ticker: AMPL
+    segment: data_platform
+    industry: software
+    proxy_label: presumed_leader
+    careers_url: "https://amplitude.com/careers"
+
+  - id: capital_one
+    name: Capital One
+    ticker: COF
+    segment: traditional_regulated
+    industry: financial_services
+    proxy_label: presumed_leader
+    careers_url: "https://www.capitalonecareers.com/"

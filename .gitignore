@@ -1,0 +1,75 @@
+# Byte-compiled / cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# uv / packaging
+dist/
+build/
+*.egg-info/
+.uv/
+uv.lock.bak
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# Logs & local runtime
+logs/*
+!logs/.gitkeep
+*.log
+
+# Data artifacts
+# Keep AI analyses + slim catalog for Streamlit Cloud; ignore bulky raw filings locally.
+data/raw/**
+!data/raw/.gitkeep
+data/interim/**
+!data/interim/.gitkeep
+data/external/**
+!data/external/.gitkeep
+data/processed/**
+!data/processed/.gitkeep
+!data/processed/ai/
+!data/processed/ai/**
+!data/catalog/
+!data/catalog/**
+
+# Generated database (rebuilt on app start)
+db/*.sqlite
+db/*.sqlite-*
+db/*.duckdb
+db/*.duckdb.wal
+!db/.gitkeep
+
+# Jupyter
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/
+
+# IDE / OS
+.idea/
+.vscode/
+*.swp
+.DS_Store
+Thumbs.db
+
+# Test / coverage
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+
+# Streamlit local secrets
+.streamlit/secrets.toml
+
+# Agent / local tooling
+.agents/

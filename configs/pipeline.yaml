@@ -1,0 +1,21 @@
+# Pipeline runtime configuration.
+
+run:
+  seed: 42
+  audit_sample_fraction: 0.2
+
+llm:
+  provider: openai
+  model_id: gpt-4o-mini
+  temperature: 0
+  prompt_version: document_analysis_v1
+  max_input_chars: 120000
+
+paths:
+  raw_dir: data/raw
+  interim_dir: data/interim
+  processed_dir: data/processed
+  external_dir: data/external
+  db_path: db/pasi.sqlite
+  prompts_dir: prompts
+  logs_dir: logs

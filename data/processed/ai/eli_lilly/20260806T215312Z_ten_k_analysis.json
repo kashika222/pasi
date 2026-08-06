@@ -1,0 +1,78 @@
+{
+  "schema_version": "1.0",
+  "company_id": "eli_lilly",
+  "company_name": "Eli Lilly",
+  "source_type": "ten_k",
+  "document_path": "data/raw/eli_lilly/ten_k/20260806T200626Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:53:12.220183Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 0,
+      "confidence": 0.85,
+      "evidence_quotes": [],
+      "rationale": "The document contains no evidence or discussion of leadership commitment to analytics, data management, or digital strategy."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 0,
+      "confidence": 0.85,
+      "evidence_quotes": [],
+      "rationale": "There is no mention in the provided text regarding investments in analytics, data science, software engineering, or technical talent."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 1,
+      "confidence": 0.6,
+      "evidence_quotes": [
+        "Our long-term success depends on our ability to continually discover or acquire, develop, and commercialize innovative medicines.",
+        "We invest in external research and technologies and manufacturing capabilities that we believe complement and strengthen our own efforts."
+      ],
+      "rationale": "The document emphasizes biopharmaceutical product and technological R&D innovation, though it does not explicitly discuss analytics- or data-driven innovation."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 0,
+      "confidence": 0.8,
+      "evidence_quotes": [],
+      "rationale": "No analytics strategy is articulated in the document; the text even explicitly notes internal limitations regarding reproducible project-level data."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 0,
+      "confidence": 0.9,
+      "evidence_quotes": [],
+      "rationale": "There are no mentions of artificial intelligence, machine learning, or advanced automated algorithms in the provided text."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 0,
+      "confidence": 0.85,
+      "evidence_quotes": [],
+      "rationale": "The document does not detail any digital transformation, enterprise technology modernization, or cloud transformation initiatives."
+    }
+  },
+  "overall_confidence": 0.81,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 2369961,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 425954,
+      "sent_char_count": 59999
+    },
+    "model_notes": "The document is an excerpt from Eli Lilly's Form 10-K focused primarily on financial performance, clinical pipeline updates, regulatory risks, and critical accounting estimates. It lacks coverage of enterprise data, analytics, AI, or digital transformation strategies.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/eli_lilly/20260806T215312Z_ten_k_analysis.json"
+  },
+  "errors": []
+}

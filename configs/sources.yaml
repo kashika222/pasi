@@ -1,0 +1,29 @@
+# Allowed public sources and collection methods.
+
+sources:
+  - type: ten_k
+    description: Annual report / Form 10-K from SEC EDGAR
+    collection_method: sec_edgar_download
+    automated_scrape: false
+    module: pasi.ingest.sec_10k.SecTenKCollector
+
+  - type: earnings_call
+    description: Earnings call transcript (local file or explicit authorized URL)
+    collection_method: local_file_or_http_get
+    automated_scrape: false
+    module: pasi.ingest.earnings.EarningsTranscriptCollector
+    notes: Do not scrape commercial transcript portals by default.
+
+  - type: employee_reviews
+    description: Licensed / packaged employee review datasets only
+    collection_method: dataset_import
+    automated_scrape: false
+    module: pasi.ingest.employee_reviews.EmployeeReviewDatasetLoader
+    notes: Do not scrape Glassdoor or similar sites.
+
+  - type: careers
+    description: Company careers page snapshot (local HTML preferred)
+    collection_method: local_html_or_opt_in_http_get
+    automated_scrape: false
+    module: pasi.ingest.careers.CareersPageCollector
+    notes: HTTP fetch requires allow_fetch=True after confirming site terms.

@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "company_id": "airbnb",
+  "company_name": "Airbnb",
+  "source_type": "ten_k",
+  "document_path": "data/raw/airbnb/ten_k/20260806T200622Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:52:21.701587Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 0,
+      "confidence": 0.8,
+      "evidence_quotes": [],
+      "rationale": "The document does not detail executive leadership commitment to building a data-driven culture or specific analytics governance."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 0,
+      "confidence": 0.8,
+      "evidence_quotes": [],
+      "rationale": "While the document notes general headcount increases in product development and other areas, it contains no explicit mention of investments in data science, analytics, or AI talent."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 0,
+      "confidence": 0.8,
+      "evidence_quotes": [],
+      "rationale": "The text references general platform updates and new service offerings, but provides no specific evidence of advanced analytics or technology innovation initiatives."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "We track the following key business metrics and financial measures that are not calculated and presented in accordance with generally accepted accounting principles in the United States of America (“U.S. GAAP”) (“non-GAAP financial measures”) to evaluate our operating performance, identify trends, formulate financial projections, and make strategic decisions."
+      ],
+      "rationale": "The company outlines a structured framework for using key operating and non-GAAP business metrics to evaluate performance, track trends, and guide strategic decision-making."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 0,
+      "confidence": 0.9,
+      "evidence_quotes": [],
+      "rationale": "The provided document does not mention artificial intelligence, machine learning, or related strategic initiatives."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 1,
+      "confidence": 0.75,
+      "evidence_quotes": [
+        "Cost of revenue includes payment processing costs, including merchant fees and chargebacks, costs associated with third-party data centers used to host our platform, and amortization of internally developed software and acquired technology.",
+        "We have a commercial agreement with a data hosting services provider to spend or incur an aggregate of at least $1.7 billion for vendor services through 2031."
+      ],
+      "rationale": "The document provides partial evidence of digital infrastructure investment, including ongoing platform development, third-party data center usage, and a $1.7 billion commitment for vendor data hosting services through 2031."
+    }
+  },
+  "overall_confidence": 0.8,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 2131290,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 449405,
+      "sent_char_count": 60000
+    },
+    "model_notes": "The document consists of excerpted financial disclosures (Form 10-K, Item 7 & 8). It covers operational metrics and data infrastructure expenditures but lacks detailed discussions of AI, data science talent, or overall enterprise analytics strategy.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/airbnb/20260806T215221Z_ten_k_analysis.json"
+  },
+  "errors": []
+}

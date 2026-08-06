@@ -1,0 +1,53 @@
+Analyze the following public document for analytics-maturity signals.
+
+Company ID: {{COMPANY_ID}}
+Company name: {{COMPANY_NAME}}
+Source type: {{SOURCE_TYPE}}
+
+Return JSON with this exact shape:
+{
+  "dimensions": {
+    "leadership_commitment": {
+      "score": 0,
+      "confidence": 0.0,
+      "evidence_quotes": [],
+      "rationale": ""
+    },
+    "talent_investment": {
+      "score": 0,
+      "confidence": 0.0,
+      "evidence_quotes": [],
+      "rationale": ""
+    },
+    "innovation": {
+      "score": 0,
+      "confidence": 0.0,
+      "evidence_quotes": [],
+      "rationale": ""
+    },
+    "analytics_strategy": {
+      "score": 0,
+      "confidence": 0.0,
+      "evidence_quotes": [],
+      "rationale": ""
+    },
+    "ai_strategy": {
+      "score": 0,
+      "confidence": 0.0,
+      "evidence_quotes": [],
+      "rationale": ""
+    },
+    "digital_transformation": {
+      "score": 0,
+      "confidence": 0.0,
+      "evidence_quotes": [],
+      "rationale": ""
+    }
+  },
+  "overall_confidence": 0.0,
+  "notes": ""
+}
+
+DOCUMENT TEXT START
+{{DOCUMENT_TEXT}}
+DOCUMENT TEXT END

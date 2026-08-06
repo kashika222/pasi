@@ -1,0 +1,94 @@
+{
+  "schema_version": "1.0",
+  "company_id": "snowflake",
+  "company_name": "Snowflake",
+  "source_type": "ten_k",
+  "document_path": "data/raw/snowflake/ten_k/20260806T200619Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:54:04.371030Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 1,
+      "confidence": 0.85,
+      "evidence_quotes": [
+        "Our vision is a world where data and AI turn possibilities into reality.",
+        "To realize this vision, we deliver the AI Data Cloud, a network where Snowflake customers, partners, developers, data providers, and data consumers can break down data silos"
+      ],
+      "rationale": "Leadership articulates an explicit strategic vision to center business operations around data and AI through the AI Data Cloud, though disclosures are primarily externally focused on product strategy."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 2,
+      "confidence": 0.95,
+      "evidence_quotes": [
+        "hiring top technical talent to enable new use cases, strengthen our technical lead in our platform’s architecture",
+        "Our research and development organization consists of teams specializing in software engineering, user experience, product management, data science, technical program management, and technical writing."
+      ],
+      "rationale": "Snowflake demonstrates specific ongoing talent investments, employing 2,424 dedicated R&D personnel including data science and engineering specialists."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 2,
+      "confidence": 0.95,
+      "evidence_quotes": [
+        "Innovation is at the core of our culture. We have developed innovative technology across our platform",
+        "We have a history of technological innovation, releasing new features on a regular basis and making frequent updates to our platform."
+      ],
+      "rationale": "The company places continuous innovation at the core of its culture, backed by heavy R&D investments, rapid platform feature releases, and technology acquisitions such as Observe, Inc."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 2,
+      "confidence": 0.95,
+      "evidence_quotes": [
+        "Our platform supports a wide range of product categories that enable our customers’ most important business objectives, including analytics, data engineering, AI, and applications and collaboration.",
+        "Consolidate data into a single, analytics- and AI-ready source of truth."
+      ],
+      "rationale": "Snowflake maintains a comprehensive analytics platform strategy focused on un-siloing enterprise data into a centralized, analytics-ready single source of truth."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 2,
+      "confidence": 0.95,
+      "evidence_quotes": [
+        "If we are not successful in executing an effective AI strategy, our business, financial condition, and results of operations could be harmed.",
+        "Strategic partnerships with foundational model providers deliver state-of-the-art models natively within Snowflake Cortex AI.",
+        "Through these high-value alliances, we seek to maintain model neutrality, enabling enterprises to securely deploy frontier models while establishing Snowflake as the trusted, independent foundation for enterprise AI."
+      ],
+      "rationale": "Snowflake has a clear and heavily articulated AI strategy focused on model neutrality, agentic AI workflows, Cortex AI capabilities, and strategic model-provider partnerships."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 1,
+      "confidence": 0.85,
+      "evidence_quotes": [
+        "To access the value of this data, organizations are undergoing massive digital transformation initiatives, and data is driving operations for many modern enterprises.",
+        "Global System Integrators (GSIs) to drive large-scale digital transformations."
+      ],
+      "rationale": "Digital transformation is referenced primarily in the context of market opportunities, client trends, and partner ecosystem alignment with GSIs."
+    }
+  },
+  "overall_confidence": 0.92,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 3145538,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 600718,
+      "sent_char_count": 60000
+    },
+    "model_notes": "Snowflake's Form 10-K provides extensive evidence regarding analytics, AI strategy, innovation, and talent investment given its core line of business as an AI Data Cloud platform provider.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/snowflake/20260806T215404Z_ten_k_analysis.json"
+  },
+  "errors": []
+}

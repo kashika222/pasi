@@ -1,0 +1,88 @@
+{
+  "schema_version": "1.0",
+  "company_id": "spotify",
+  "company_name": "Spotify",
+  "source_type": "ten_k",
+  "document_path": "data/raw/spotify/ten_k/20260806T200704Z_ten_k.json",
+  "analyzed_at": "2026-08-06T21:54:23.205577Z",
+  "model_id": "gemini-flash-latest",
+  "prompt_version": "document_analysis_v1",
+  "status": "success",
+  "dimensions": {
+    "leadership_commitment": {
+      "id": "leadership_commitment",
+      "label": "Leadership Commitment",
+      "score": 0,
+      "confidence": 0.6,
+      "evidence_quotes": [],
+      "rationale": "The document does not provide evidence of executive or board leadership governance, commitment, or strategic oversight specifically dedicated to data and analytics."
+    },
+    "talent_investment": {
+      "id": "talent_investment",
+      "label": "Talent Investment",
+      "score": 1,
+      "confidence": 0.5,
+      "evidence_quotes": [
+        "recruit, train, and retain highly skilled personnel"
+      ],
+      "rationale": "There is a general mention of the need to recruit and train highly skilled personnel, but no explicit discussion of specialized talent investments in analytics or data science."
+    },
+    "innovation": {
+      "id": "innovation",
+      "label": "Innovation",
+      "score": 2,
+      "confidence": 0.9,
+      "evidence_quotes": [
+        "continued to innovate across our user experience through various product updates",
+        "We are also continuing to make investments in AI initiatives across our business, including launching new AI features in our products and services."
+      ],
+      "rationale": "Spotify provides clear evidence of ongoing product innovation, enhancements to user experience, and targeted investments in new AI capabilities."
+    },
+    "analytics_strategy": {
+      "id": "analytics_strategy",
+      "label": "Analytics Strategy",
+      "score": 2,
+      "confidence": 0.95,
+      "evidence_quotes": [
+        "Our system for predicting user preferences and selecting content tailored to our users’ individual tastes is based on advanced data analytics systems and our proprietary algorithms, including AI and machine learning models.",
+        "The effectiveness of our ability to provide a personalized experience to our users depends in part on our ability to gather and effectively analyze large amounts of user data"
+      ],
+      "rationale": "The strategy highlights collecting and analyzing large-scale user data using advanced analytics and proprietary algorithms as a core differentiator for user personalization."
+    },
+    "ai_strategy": {
+      "id": "ai_strategy",
+      "label": "AI Strategy",
+      "score": 2,
+      "confidence": 0.95,
+      "evidence_quotes": [
+        "We are also continuing to make investments in AI initiatives across our business, including launching new AI features in our products and services.",
+        "The effectiveness of our ability to provide a personalized experience to our users depends in part on our ability to gather and effectively analyze large amounts of user data and our ability to train our AI and machine learning models."
+      ],
+      "rationale": "The document outlines explicit financial investments in AI initiatives and details the deployment of machine learning models to power personalization and introduce new product features."
+    },
+    "digital_transformation": {
+      "id": "digital_transformation",
+      "label": "Digital Transformation",
+      "score": 1,
+      "confidence": 0.7,
+      "evidence_quotes": [
+        "the digital advertising industry increasingly uses data-driven technologies and advertising products, such as automated buying."
+      ],
+      "rationale": "While Spotify operates natively in the digital domain, the text offers only vague or industry-level context regarding programmatic platforms and data-driven ad technologies rather than an overarching internal digital transformation roadmap."
+    }
+  },
+  "overall_confidence": 0.8,
+  "metadata": {
+    "preparation": {
+      "original_char_count": 3560114,
+      "was_html": true,
+      "truncated": true,
+      "max_chars": 60000,
+      "text_char_count_after_html": 681531,
+      "sent_char_count": 59999
+    },
+    "model_notes": "Spotify demonstrates strong evidence for analytics, innovation, and AI strategies directly connected to product personalization and user engagement, but lacks explicit detailed commentary on data leadership governance or dedicated analytics hiring.",
+    "archived_json": "/Users/kashikachopra/Documents/Purdue/Projects/pasi/data/processed/ai/spotify/20260806T215423Z_ten_k_analysis.json"
+  },
+  "errors": []
+}
