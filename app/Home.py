@@ -46,6 +46,29 @@ organization’s analytics maturity in a transparent, evidence-linked way?
         unsafe_allow_html=True,
     )
 
+    # Visual research workflow (display-only; no behavior changes)
+    section_label("Research workflow")
+    st.markdown(
+        """
+<div class="pasi-card" style="text-align:center;padding:1.1rem 1rem;">
+  <div style="display:inline-flex;flex-direction:column;align-items:center;gap:0.35rem;">
+    <span class="pasi-pill pasi-pill-indigo">Public Documents</span>
+    <span class="pasi-muted" style="line-height:1;">↓</span>
+    <span class="pasi-pill pasi-pill-indigo">Data Collection</span>
+    <span class="pasi-muted" style="line-height:1;">↓</span>
+    <span class="pasi-pill pasi-pill-indigo">AI Analysis</span>
+    <span class="pasi-muted" style="line-height:1;">↓</span>
+    <span class="pasi-pill pasi-pill-indigo">Structured Indicators</span>
+    <span class="pasi-muted" style="line-height:1;">↓</span>
+    <span class="pasi-pill pasi-pill-indigo">Analytics Assessment</span>
+    <span class="pasi-muted" style="line-height:1;">↓</span>
+    <span class="pasi-pill pasi-pill-leading">Research Dashboard</span>
+  </div>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
+
     section_label("Cohort overview")
     c1, c2 = st.columns(2)
     with c1:
