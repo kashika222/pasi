@@ -17,10 +17,15 @@ from pasi.ui import (
     missing_data_notice,
     page_header,
     render_ai_overview,
+    render_confidence_bar,
     render_evidence_quotes,
+    render_pill,
+    render_score_legend,
+    render_score_pill,
     render_source_refs,
     section_label,
     sidebar_controls,
+    tone_for_assessment,
 )
 from pasi.viz import radar_chart
 
@@ -66,7 +71,19 @@ SEGMENT_LABELS = {
 }
 segment = company.get("segment") or "—"
 
-section_label(f"{selected_name} analysis")
+header_l, header_r = st.columns([1.4, 0.6], gap="large")
+with header_l:
+    section_label(f"{selected_name} analysis")
+with header_r:
+    st.download_button(
+        "Download executive brief",
+        data=executive_summary_text(profile),
+        file_name=f"{company_id}_executive_brief.txt",
+        mime="text/plain",
+        icon=":material/download:",
+        width="stretch",
+    )
+
 top1, top2, top3, top4 = st.columns(4)
 top1.metric("Segment", SEGMENT_LABELS.get(str(segment), str(segment)), border=True)
 top2.metric("Industry", company.get("industry") or "—", border=True)
@@ -83,15 +100,7 @@ if not profile["has_documents"]:
         "Run `pasi collect`, then refresh the analytical store."
     )
 
-brief = executive_summary_text(profile)
-render_ai_overview(brief)
-st.download_button(
-    "Download executive brief",
-    data=brief,
-    file_name=f"{company_id}_executive_brief.txt",
-    mime="text/plain",
-    icon=":material/download:",
-)
+render_ai_overview(executive_summary_text(profile))
 
 left, right = st.columns([1.05, 0.95], gap="large")
 with left:
@@ -112,30 +121,40 @@ with right:
         "Leadership Commitment · Talent Investment · Strategic Communication · "
         "Employee Perception · Innovation Signals"
     )
+    render_score_legend()
     categories = profile["categories"]
-    cat_labels = [f"{c['label']} — {c['assessment']}" for c in categories]
-    choice = st.radio(
-        "Category",
-        options=cat_labels,
-        label_visibility="collapsed",
-    )
+    cat_labels = [c["label"] for c in categories]
+    choice = st.radio("Category", options=cat_labels, label_visibility="collapsed")
     cat = categories[cat_labels.index(choice)]
 
     with st.container(border=True):
         st.markdown(f"### {cat['label']}")
         st.markdown(f"<p class='pasi-muted'>{cat['description']}</p>", unsafe_allow_html=True)
+
         m1, m2, m3 = st.columns(3)
-        m1.metric("Assessment", cat["assessment"], border=True)
-        m2.metric(
-            "Score (0–2)",
-            f"{cat['score']:.2f}" if cat["score"] is not None else "n/a",
-            border=True,
-        )
-        m3.metric(
-            "Confidence",
-            f"{cat['confidence']:.2f}" if cat["confidence"] is not None else "n/a",
-            border=True,
-        )
+        with m1:
+            section_label("Assessment")
+            render_pill(cat["assessment"], tone_for_assessment(cat["assessment"]))
+        with m2:
+            section_label("Score (0–2)")
+            render_score_pill(cat["score"])
+        with m3:
+            render_confidence_bar(cat["confidence"])
+
+        # Compact category score cards for remaining categories (same metrics only)
+        section_label("Category snapshot")
+        for other in categories:
+            cols = st.columns([1.4, 0.7, 0.7])
+            cols[0].markdown(f"**{other['label']}**")
+            with cols[1]:
+                render_score_pill(other["score"])
+            with cols[2]:
+                render_pill(
+                    other["assessment"].split("/")[0].strip()
+                    if other["assessment"]
+                    else "n/a",
+                    tone_for_assessment(other["assessment"]),
+                )
 
         section_label("AI summary")
         st.write(cat["ai_summary"])

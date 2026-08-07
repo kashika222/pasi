@@ -22,6 +22,7 @@ page_header(
     "Public Analytics Signal Index",
     "An AI-assisted research platform for assessing organizational analytics maturity "
     "from publicly observable signals.",
+    kicker="Central research inquiry",
 )
 
 repo = get_repository()
@@ -34,10 +35,9 @@ with_ai = int((coverage["analyses"] > 0).sum()) if not coverage.empty else 0
 main, aside = st.columns([1.55, 0.85], gap="large")
 
 with main:
-    section_label("The central inquiry")
     st.markdown(
         """
-<div class="pasi-card pasi-muted">
+<div class="pasi-hero pasi-muted">
 Can publicly available organizational signals — annual reports, earnings communication,
 talent postings, and licensed employee-review datasets — be used to assess an
 organization’s analytics maturity in a transparent, evidence-linked way?
@@ -48,11 +48,15 @@ organization’s analytics maturity in a transparent, evidence-linked way?
 
     section_label("Cohort overview")
     c1, c2 = st.columns(2)
-    c1.metric("Companies in cohort", len(companies), border=True)
-    c2.metric("Documents indexed", len(docs), border=True)
+    with c1:
+        st.metric("Companies in cohort", len(companies), border=True)
+    with c2:
+        st.metric("Documents indexed", len(docs), border=True)
     c3, c4 = st.columns(2)
-    c3.metric("AI analyses indexed", len(analyses), border=True)
-    c4.metric("Companies with AI output", with_ai, border=True)
+    with c3:
+        st.metric("AI analyses indexed", len(analyses), border=True)
+    with c4:
+        st.metric("Companies with AI output", with_ai, border=True)
 
     st.markdown('<hr class="pasi-divider" />', unsafe_allow_html=True)
 
@@ -112,7 +116,11 @@ Talent investment and role-mix signals
 """,
         unsafe_allow_html=True,
     )
-    st.page_link("pages/4_Methodology.py", label="Read full methodology", icon=":material/arrow_forward:")
+    st.page_link(
+        "pages/4_Methodology.py",
+        label="Read full methodology",
+        icon=":material/arrow_forward:",
+    )
 
 st.caption(
     "PASI is an exploratory public-signal index — not a validated measure of internal analytics capability."

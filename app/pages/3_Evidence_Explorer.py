@@ -13,7 +13,14 @@ import streamlit as st
 from pasi.ai.schema import DIMENSION_LABELS, DimensionId
 from pasi.services import evidence_trail
 from pasi.store import get_repository
-from pasi.ui import inject_theme, missing_data_notice, page_header, section_label, sidebar_controls
+from pasi.ui import (
+    inject_theme,
+    missing_data_notice,
+    page_header,
+    render_evidence_card,
+    section_label,
+    sidebar_controls,
+)
 
 st.set_page_config(page_title="PASI | Evidence Explorer", layout="wide")
 inject_theme()
@@ -36,7 +43,10 @@ c1, c2, c3 = st.columns(3)
 company_name = c1.selectbox("Company", company_options)
 source_type = c2.selectbox("Source family", source_options)
 dimension_id = c3.selectbox("Dimension", dimension_options)
-search = st.text_input("Search excerpts", placeholder="e.g. machine learning, data platform")
+search = st.text_input(
+    "Search excerpts",
+    placeholder="Search excerpts, sources, or tags…",
+)
 
 name_to_id = dict(zip(companies["name"], companies["company_id"], strict=False))
 company_id = None if company_name == "All" else name_to_id.get(company_name)
@@ -85,24 +95,4 @@ st.caption(f"Showing {len(trails)} evidence item(s)")
 label_lookup = {d.value: label for d, label in DIMENSION_LABELS.items()}
 for item in trails:
     dim_label = label_lookup.get(item["dimension_id"], item["dimension_id"])
-    header = (
-        f"{item['company_id']} · {item['source_type']} · {dim_label} "
-        f"(score={item['indicator_score']}, confidence={item['confidence']})"
-    )
-    with st.expander(header):
-        cols = st.columns([1.2, 1, 0.8], gap="medium")
-        with cols[0]:
-            st.markdown("<div class='pasi-chain-step'>Original excerpt</div>", unsafe_allow_html=True)
-            st.markdown(f"<div class='pasi-quote'>{item['excerpt']}</div>", unsafe_allow_html=True)
-        with cols[1]:
-            st.markdown("<div class='pasi-chain-step'>AI interpretation</div>", unsafe_allow_html=True)
-            st.write(item["interpretation"] or "No rationale stored for this item.")
-        with cols[2]:
-            st.markdown("<div class='pasi-chain-step'>Final indicator</div>", unsafe_allow_html=True)
-            st.metric("Score", item["indicator_score"], border=True)
-            st.metric("Confidence", item["confidence"], border=True)
-            st.caption(f"Dimension: `{item['dimension_id']}`")
-        if item.get("provenance_url"):
-            st.caption(f"Source: {item['provenance_url']}")
-        if item.get("document_path"):
-            st.caption(f"Document path: {item['document_path']}")
+    render_evidence_card(item, dimension_label=dim_label)

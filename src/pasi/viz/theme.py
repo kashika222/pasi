@@ -6,35 +6,46 @@ import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# Stitch "Executive Insight System" consulting palette.
+# Stitch "Executive Insight System" — modern corporate palette.
 COLORS = {
-    "navy": "#002B49",
-    "navy_deep": "#001629",
-    "slate": "#4E616F",
-    "steel": "#8A9BA8",
-    "mist": "#D1D5DB",
-    "paper": "#F8F9FA",
-    "surface": "#F9F9F9",
-    "ink": "#1A1C1C",
-    "accent": "#2E5D82",
-    "accent_soft": "#7293B6",
-    "warn": "#9B2C2C",
-    "muted": "#B5C9DA",
+    "navy": "#1E293B",
+    "navy_deep": "#091426",
+    "ink": "#191C1E",
+    "slate": "#45474C",
+    "steel": "#94A3B8",
+    "mist": "#E2E8F0",
+    "paper": "#F8FAFC",
+    "surface": "#F7F9FB",
+    "indigo": "#6366F1",
+    "indigo_deep": "#4648D4",
+    "accent": "#6366F1",
+    "accent_soft": "#C0C1FF",
+    "cyan": "#0099D9",
+    "success": "#10B981",
+    "success_bg": "#D1FAE5",
+    "success_text": "#047857",
+    "danger": "#F43F5E",
+    "danger_bg": "#FFE4E6",
+    "danger_text": "#BE123C",
+    "neutral_bg": "#F1F5F9",
+    "neutral_text": "#334155",
+    "warn": "#F43F5E",
+    "muted": "#94A3B8",
 }
 
 SCORE_COLORS = {
-    0: "#D1D5DB",
-    1: "#7293B6",
-    2: "#002B49",
+    0: "#F43F5E",
+    1: "#6366F1",
+    2: "#10B981",
 }
 
 _PALETTE = [
+    COLORS["indigo"],
+    COLORS["success"],
+    COLORS["cyan"],
     COLORS["navy"],
-    COLORS["accent"],
-    COLORS["slate"],
-    COLORS["accent_soft"],
     COLORS["steel"],
-    COLORS["muted"],
+    COLORS["accent_soft"],
 ]
 
 
@@ -46,7 +57,7 @@ def apply_layout(fig: go.Figure, *, title: str | None = None, height: int = 420)
         ),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Source Sans 3, Helvetica, Arial, sans-serif", color=COLORS["slate"], size=12),
+        font=dict(family="Inter, Helvetica, Arial, sans-serif", color=COLORS["slate"], size=12),
         margin=dict(l=40, r=30, t=60 if title else 30, b=40),
         height=height,
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
@@ -62,7 +73,6 @@ def radar_chart(
     title: str | None = None,
     max_score: float = 2.0,
 ) -> go.Figure:
-    """Radar for one company. ``scores`` maps dimension label → value."""
     if not scores:
         fig = go.Figure()
         fig.add_annotation(text="No scored dimensions available", showarrow=False)
@@ -79,8 +89,8 @@ def radar_chart(
             r=values_c,
             theta=labels_c,
             fill="toself",
-            fillcolor="rgba(46, 93, 130, 0.12)",
-            line=dict(color=COLORS["accent"], width=2),
+            fillcolor="rgba(99, 102, 241, 0.15)",
+            line=dict(color=COLORS["indigo"], width=2),
             name="Score",
         )
     )
@@ -100,7 +110,6 @@ def multi_radar(
     title: str | None = None,
     max_score: float = 2.0,
 ) -> go.Figure:
-    """Overlay radars for multiple companies (same dimension labels)."""
     fig = go.Figure()
     if not company_scores:
         fig.add_annotation(text="No comparison data available", showarrow=False)
@@ -124,7 +133,7 @@ def multi_radar(
                 name=company,
                 line=dict(color=color, width=2, dash="solid" if idx == 0 else "dot"),
                 fill="toself",
-                fillcolor=f"rgba(0, 43, 73, {0.06 + idx * 0.02})",
+                fillcolor=f"rgba(99, 102, 241, {0.05 + idx * 0.03})",
             )
         )
     fig.update_layout(
@@ -141,7 +150,6 @@ def heatmap(
     *,
     title: str | None = None,
 ) -> go.Figure:
-    """Heatmap with companies on Y and dimensions on X."""
     if matrix.empty:
         fig = go.Figure()
         fig.add_annotation(text="No matrix data available", showarrow=False)
@@ -149,7 +157,7 @@ def heatmap(
 
     fig = px.imshow(
         matrix,
-        color_continuous_scale=["#F8F9FA", "#B5C9DA", "#002B49"],
+        color_continuous_scale=["#FFE4E6", "#F1F5F9", "#D1FAE5"],
         aspect="auto",
         labels=dict(color="Score"),
     )
@@ -194,6 +202,6 @@ def distribution(
         df,
         x=x,
         nbins=6,
-        color_discrete_sequence=[COLORS["navy"]],
+        color_discrete_sequence=[COLORS["indigo"]],
     )
     return apply_layout(fig, title=title, height=380)

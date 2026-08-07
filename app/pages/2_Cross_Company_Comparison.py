@@ -12,7 +12,15 @@ import streamlit as st
 
 from pasi.services import comparison_payload, export_dimension_csv
 from pasi.store import get_repository
-from pasi.ui import inject_theme, missing_data_notice, page_header, section_label, sidebar_controls
+from pasi.ui import (
+    inject_theme,
+    missing_data_notice,
+    page_header,
+    render_score_legend,
+    render_score_matrix,
+    section_label,
+    sidebar_controls,
+)
 from pasi.viz import distribution, grouped_bar, heatmap, multi_radar
 
 st.set_page_config(page_title="PASI | Comparison", layout="wide")
@@ -97,5 +105,7 @@ st.plotly_chart(
     width="stretch",
 )
 
-section_label("Underlying matrix")
-st.dataframe(matrix.round(2), width="stretch")
+section_label("Dimension score matrix")
+render_score_legend()
+st.caption("Green = strong signal · Gray = partial · Red = weak/absent (existing 0–2 scores only)")
+render_score_matrix(matrix)

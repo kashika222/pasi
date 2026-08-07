@@ -1,47 +1,49 @@
 [theme]
 base = "light"
-primaryColor = "#002B49"
-backgroundColor = "#F9F9F9"
-secondaryBackgroundColor = "#F3F3F4"
-textColor = "#1A1C1C"
-linkColor = "#2E5D82"
-borderColor = "#D1D5DB"
-baseRadius = "none"
-buttonRadius = "none"
+primaryColor = "#6366F1"
+backgroundColor = "#F7F9FB"
+secondaryBackgroundColor = "#F1F5F9"
+textColor = "#191C1E"
+linkColor = "#6366F1"
+borderColor = "#E2E8F0"
+baseRadius = "0.75rem"
+buttonRadius = "0.5rem"
 showWidgetBorder = true
 
-font = "Source Sans 3:https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+font = "Inter:https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
 headingFont = "Playfair Display:https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
 
 headingFontSizes = ["2rem", "1.5rem", "1.25rem", "1.1rem", "1rem", "0.9rem"]
 headingFontWeights = [700, 700, 600, 600, 600, 600]
 
-dataframeBorderColor = "#D1D5DB"
-dataframeHeaderBackgroundColor = "#F3F3F4"
+dataframeBorderColor = "#E2E8F0"
+dataframeHeaderBackgroundColor = "#F1F5F9"
 
-chartCategoricalColors = ["#002B49", "#2E5D82", "#4E616F", "#7293B6", "#8A9BA8", "#B5C9DA"]
+chartCategoricalColors = ["#6366F1", "#10B981", "#0099D9", "#1E293B", "#94A3B8", "#C0C1FF"]
 chartSequentialColors = [
-  "#F8F9FA",
-  "#E8EEF4",
-  "#D1DCE8",
-  "#B5C9DA",
-  "#8A9BA8",
-  "#7293B6",
-  "#4E616F",
-  "#2E5D82",
-  "#002B49",
-  "#001629",
+  "#FFE4E6",
+  "#FECDD3",
+  "#F1F5F9",
+  "#E2E8F0",
+  "#C7D2FE",
+  "#A5B4FC",
+  "#818CF8",
+  "#6366F1",
+  "#34D399",
+  "#10B981",
 ]
 
-blueColor = "#2E5D82"
-grayColor = "#4E616F"
-redColor = "#9B2C2C"
+blueColor = "#6366F1"
+greenColor = "#10B981"
+redColor = "#F43F5E"
+grayColor = "#94A3B8"
 
 [theme.sidebar]
-backgroundColor = "#F8F9FA"
-secondaryBackgroundColor = "#EEEEEE"
-textColor = "#1A1C1C"
-borderColor = "#D1D5DB"
+backgroundColor = "#1E293B"
+secondaryBackgroundColor = "#0F172A"
+textColor = "#F8FAFC"
+primaryColor = "#6366F1"
+borderColor = "#334155"
 
 [server]
 headless = true

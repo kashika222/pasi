@@ -18,12 +18,36 @@ inject_theme()
 sidebar_controls()
 
 page_header(
-    "Methodology",
+    "Methodological Framework",
     "How public signals are collected, analyzed, indexed, and explained.",
+    kicker="Consulting report",
 )
 
 repo = get_repository()
 meta = repo.meta()
+
+st.markdown(
+    """
+<div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0.85rem;margin-bottom:1.1rem;">
+  <div class="pasi-card" style="text-align:center;">
+    <div class="pasi-kicker">Stage 01</div>
+    <h3 style="margin:0.2rem 0;">Ingestion</h3>
+    <p class="pasi-muted">Collect public artifacts into standardized JSON with provenance.</p>
+  </div>
+  <div class="pasi-card" style="text-align:center;border-color:#6366F1;">
+    <div class="pasi-kicker" style="color:#6366F1;">Stage 02</div>
+    <h3 style="margin:0.2rem 0;color:#6366F1;">Processing</h3>
+    <p class="pasi-muted">Analyze clean text with versioned prompts into dimension scores.</p>
+  </div>
+  <div class="pasi-card" style="text-align:center;">
+    <div class="pasi-kicker" style="color:#10B981;">Stage 03</div>
+    <h3 style="margin:0.2rem 0;color:#10B981;">Synthesis</h3>
+    <p class="pasi-muted">Index outputs and explain every score through evidence chains.</p>
+  </div>
+</div>
+""",
+    unsafe_allow_html=True,
+)
 
 tab_pipeline, tab_prompts, tab_limits = st.tabs(
     [
