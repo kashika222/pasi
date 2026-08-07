@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import pathsetup  # noqa: F401 — prefer repo src/ on Streamlit Cloud
 import streamlit as st
 
 from pasi.store import get_repository

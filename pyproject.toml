@@ -1,6 +1,6 @@
 [project]
 name = "pasi"
-version = "0.1.0"
+version = "0.1.1"
 description = "Public Analytics Signal Index (PASI) — AI-assisted assessment of organizational analytics maturity from public signals."
 readme = "README.md"
 requires-python = ">=3.12"
