@@ -1,7 +1,8 @@
-"""Ensure ``src/`` is on ``sys.path`` for Streamlit Cloud.
+"""Ensure repo ``src/`` is preferred for Streamlit Cloud imports.
 
-Cloud may cache a prior non-editable ``pasi==0.1.x`` wheel. Prefer the
-checked-out source tree so UI/package imports always match the repo.
+Cloud often keeps a cached ``pasi`` wheel in site-packages. Always put the
+checked-out ``src/`` first and drop any already-imported ``pasi*`` modules so
+pages pick up the latest UI helpers.
 """
 
 from __future__ import annotations
@@ -15,8 +16,14 @@ def ensure_src_on_path() -> None:
     for root in here.parents:
         if (root / "pyproject.toml").exists() and (root / "src" / "pasi").is_dir():
             src = str(root / "src")
-            if src not in sys.path:
-                sys.path.insert(0, src)
+            while src in sys.path:
+                sys.path.remove(src)
+            sys.path.insert(0, src)
+
+            # Force reload from src if a stale site-packages copy was imported.
+            for name in list(sys.modules):
+                if name == "pasi" or name.startswith("pasi."):
+                    del sys.modules[name]
             return
 
 
