@@ -67,7 +67,7 @@ company = profile["company"]
 SEGMENT_LABELS = {
     "digital_product": "Digital product",
     "data_platform": "Data platform",
-    "traditional_regulated": "Traditional / regulated",
+    "traditional_regulated": "Traditional",
 }
 segment = company.get("segment") or "—"
 

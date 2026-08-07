@@ -20,9 +20,23 @@ Tone = Literal["leading", "baseline", "lagging", "neutral", "indigo"]
 CUSTOM_CSS = f"""
 <style>
     .block-container {{
-        padding-top: 1.75rem;
+        padding-top: 4rem !important;
         padding-bottom: 3.5rem;
         max-width: 1280px;
+    }}
+    /* Keep header tag clear of Streamlit Cloud toolbar / header chrome */
+    .pasi-tag {{
+        display: inline-block;
+        background: #EEF2FF;
+        color: {COLORS['indigo_deep']};
+        border-radius: 999px;
+        padding: 0.28rem 0.75rem;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        margin-top: 0.35rem;
+        margin-bottom: 0.65rem;
     }}
 
     /* Dark midnight sidebar */
@@ -83,18 +97,6 @@ CUSTOM_CSS = f"""
         color: {COLORS['steel']};
         font-weight: 600;
         margin-bottom: 0.45rem;
-    }}
-    .pasi-tag {{
-        display: inline-block;
-        background: #EEF2FF;
-        color: {COLORS['indigo_deep']};
-        border-radius: 999px;
-        padding: 0.28rem 0.75rem;
-        font-size: 0.72rem;
-        font-weight: 600;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        margin-bottom: 0.65rem;
     }}
     .pasi-lede {{
         color: {COLORS['slate']};
@@ -299,18 +301,32 @@ CUSTOM_CSS = f"""
         background: #FFFFFF;
         border: 1px solid {COLORS['mist']};
         border-radius: 0.85rem;
-        padding: 0.85rem 1rem;
+        padding: 0.75rem 0.85rem;
         box-shadow: 0 2px 12px rgba(30, 41, 59, 0.03);
+        overflow: visible;
     }}
     div[data-testid="stMetricValue"] {{
-        font-family: 'Playfair Display', Georgia, serif;
-        color: {COLORS['navy']};
+        font-family: 'Playfair Display', Georgia, serif !important;
+        color: {COLORS['navy']} !important;
+        font-size: 1.05rem !important;
+        line-height: 1.25 !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        word-break: break-word;
+    }}
+    div[data-testid="stMetricValue"] > div {{
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        font-size: 1.05rem !important;
+        line-height: 1.25 !important;
     }}
     div[data-testid="stMetricLabel"] {{
         color: {COLORS['steel']};
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        font-size: 0.75rem !important;
+        font-size: 0.72rem !important;
     }}
     div[data-testid="stExpander"] {{
         border: 1px solid {COLORS['mist']};
