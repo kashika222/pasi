@@ -7,6 +7,7 @@ Never invents scores — only persists what the pipeline produced.
 from __future__ import annotations
 
 import json
+import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -19,6 +20,11 @@ from pasi.ingest.companies import load_companies
 from pasi.logging.setup import get_logger
 
 logger = get_logger(__name__)
+
+
+def _is_streamlit_cloud() -> bool:
+    """Streamlit Community Cloud mounts the repo under ``/mount/src``."""
+    return Path("/mount/src").exists() or os.environ.get("STREAMLIT_RUNTIME_ENV") == "cloud"
 
 DDL = """
 CREATE TABLE IF NOT EXISTS companies (
@@ -96,16 +102,33 @@ CREATE TABLE IF NOT EXISTS pipeline_meta (
 
 
 def duckdb_path(settings: Settings | None = None) -> Path:
+    """Resolve DuckDB file location.
+
+    On Streamlit Cloud, prefer ``/tmp/pasi.duckdb``. The repo mount often breaks
+    DuckDB file locks / read-only opens under ``db/``.
+    """
     settings = settings or get_settings()
-    # Prefer dedicated duckdb path; fall back beside sqlite setting.
-    path = getattr(settings, "duckdb_path", None) or Path("db/pasi.duckdb")
-    return settings.resolve(Path(path))
+    configured = Path(getattr(settings, "duckdb_path", None) or Path("db/pasi.duckdb"))
+    if configured.is_absolute():
+        return configured
+    if _is_streamlit_cloud():
+        return Path("/tmp/pasi.duckdb")
+    return settings.resolve(configured)
 
 
 def connect(settings: Settings | None = None, *, read_only: bool = False) -> duckdb.DuckDBPyConnection:
     path = duckdb_path(settings)
     path.parent.mkdir(parents=True, exist_ok=True)
-    return duckdb.connect(str(path), read_only=read_only)
+    # Read-only opens fail on some cloud mounts even when the file exists.
+    if read_only and not path.exists():
+        read_only = False
+    try:
+        return duckdb.connect(str(path), read_only=read_only)
+    except duckdb.Error:
+        if read_only:
+            logger.warning("DuckDB read-only open failed for %s; retrying read-write", path)
+            return duckdb.connect(str(path), read_only=False)
+        raise
 
 
 def rebuild_store(settings: Settings | None = None) -> dict[str, int]:
@@ -385,9 +408,19 @@ def _lookup_doc_url(
 
 
 def ensure_store(settings: Settings | None = None) -> Path:
-    """Rebuild store if missing; return path."""
+    """Rebuild store if missing or unreadable; return path."""
     settings = settings or get_settings()
     path = duckdb_path(settings)
     if not path.exists():
+        rebuild_store(settings=settings)
+        return path
+    try:
+        con = connect(settings=settings, read_only=False)
+        try:
+            con.execute("SELECT 1 FROM pipeline_meta LIMIT 1")
+        finally:
+            con.close()
+    except duckdb.Error as exc:
+        logger.warning("Existing DuckDB store unreadable (%s); rebuilding", exc)
         rebuild_store(settings=settings)
     return path

@@ -64,7 +64,8 @@ class StoreRepository:
         ensure_store(settings)
         return cls(settings=settings)
 
-    def _con(self, *, read_only: bool = True):
+    def _con(self, *, read_only: bool = False):
+        # Default read-write: Streamlit Cloud mounts often reject DuckDB read-only.
         return connect(self.settings, read_only=read_only)
 
     def meta(self) -> dict[str, str]:

@@ -55,4 +55,6 @@ PASI_GEMINI_API_KEY = "..."
 
 ## After deploy
 
-Open the app URL Streamlit gives you. First load rebuilds DuckDB from committed analyses + catalog. Use **Refresh analytical store** in the sidebar if charts look empty.
+Open the app URL Streamlit gives you. First load rebuilds DuckDB from committed analyses + catalog into `/tmp/pasi.duckdb` (Cloud-safe). Use **Refresh analytical store** in the sidebar if charts look empty.
+
+If you see `duckdb.ConnectionException`, redeploy after pulling the latest `main` (Cloud needs the `/tmp` DuckDB path fix).
