@@ -2,39 +2,51 @@
 
 from __future__ import annotations
 
-from typing import Any
-
 import pandas as pd
 import plotly.express as px
 import plotly.graph_objects as go
 
-# McKinsey / Deloitte-inspired muted palette (no flashy colors).
+# Stitch "Executive Insight System" consulting palette.
 COLORS = {
-    "navy": "#1F2A44",
-    "slate": "#4A5568",
-    "steel": "#6B7C93",
-    "mist": "#D9DEE7",
-    "paper": "#F7F6F3",
-    "ink": "#1A1A1A",
-    "accent": "#2F5D50",
-    "accent_soft": "#8AA399",
-    "warn": "#8A6A3C",
-    "muted": "#9AA3B2",
+    "navy": "#002B49",
+    "navy_deep": "#001629",
+    "slate": "#4E616F",
+    "steel": "#8A9BA8",
+    "mist": "#D1D5DB",
+    "paper": "#F8F9FA",
+    "surface": "#F9F9F9",
+    "ink": "#1A1C1C",
+    "accent": "#2E5D82",
+    "accent_soft": "#7293B6",
+    "warn": "#9B2C2C",
+    "muted": "#B5C9DA",
 }
 
 SCORE_COLORS = {
-    0: "#C5CBD5",
-    1: "#7F8CA3",
-    2: "#1F2A44",
+    0: "#D1D5DB",
+    1: "#7293B6",
+    2: "#002B49",
 }
+
+_PALETTE = [
+    COLORS["navy"],
+    COLORS["accent"],
+    COLORS["slate"],
+    COLORS["accent_soft"],
+    COLORS["steel"],
+    COLORS["muted"],
+]
 
 
 def apply_layout(fig: go.Figure, *, title: str | None = None, height: int = 420) -> go.Figure:
     fig.update_layout(
-        title=dict(text=title or "", font=dict(size=16, color=COLORS["navy"], family="Georgia, serif")),
+        title=dict(
+            text=title or "",
+            font=dict(size=16, color=COLORS["navy"], family="Playfair Display, Georgia, serif"),
+        ),
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Inter, Helvetica, Arial, sans-serif", color=COLORS["slate"], size=12),
+        font=dict(family="Source Sans 3, Helvetica, Arial, sans-serif", color=COLORS["slate"], size=12),
         margin=dict(l=40, r=30, t=60 if title else 30, b=40),
         height=height,
         legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
@@ -58,7 +70,6 @@ def radar_chart(
 
     labels = list(scores.keys())
     values = [float(scores[k]) for k in labels]
-    # Close the polygon
     labels_c = labels + [labels[0]]
     values_c = values + [values[0]]
 
@@ -68,7 +79,7 @@ def radar_chart(
             r=values_c,
             theta=labels_c,
             fill="toself",
-            fillcolor="rgba(47, 93, 80, 0.15)",
+            fillcolor="rgba(46, 93, 130, 0.12)",
             line=dict(color=COLORS["accent"], width=2),
             name="Score",
         )
@@ -90,13 +101,11 @@ def multi_radar(
     max_score: float = 2.0,
 ) -> go.Figure:
     """Overlay radars for multiple companies (same dimension labels)."""
-    palette = [COLORS["navy"], COLORS["accent"], COLORS["steel"], COLORS["warn"], COLORS["muted"]]
     fig = go.Figure()
     if not company_scores:
         fig.add_annotation(text="No comparison data available", showarrow=False)
         return apply_layout(fig, title=title)
 
-    # Union of labels preserves a stable axis set.
     labels: list[str] = []
     for scores in company_scores.values():
         for label in scores:
@@ -107,17 +116,15 @@ def multi_radar(
         values = [float(scores.get(label, 0)) for label in labels]
         labels_c = labels + ([labels[0]] if labels else [])
         values_c = values + ([values[0]] if values else [])
-        color = palette[idx % len(palette)]
+        color = _PALETTE[idx % len(_PALETTE)]
         fig.add_trace(
             go.Scatterpolar(
                 r=values_c,
                 theta=labels_c,
                 name=company,
-                line=dict(color=color, width=2),
+                line=dict(color=color, width=2, dash="solid" if idx == 0 else "dot"),
                 fill="toself",
-                fillcolor=color.replace(")", ", 0.08)").replace("rgb", "rgba")
-                if color.startswith("rgb")
-                else f"rgba(31,42,68,{0.06 + idx * 0.02})",
+                fillcolor=f"rgba(0, 43, 73, {0.06 + idx * 0.02})",
             )
         )
     fig.update_layout(
@@ -142,7 +149,7 @@ def heatmap(
 
     fig = px.imshow(
         matrix,
-        color_continuous_scale=["#F7F6F3", "#A8B2C1", "#1F2A44"],
+        color_continuous_scale=["#F8F9FA", "#B5C9DA", "#002B49"],
         aspect="auto",
         labels=dict(color="Score"),
     )
@@ -168,7 +175,7 @@ def grouped_bar(
         y=y,
         color=color,
         barmode="group",
-        color_discrete_sequence=[COLORS["navy"], COLORS["accent"], COLORS["steel"], COLORS["warn"]],
+        color_discrete_sequence=_PALETTE,
     )
     return apply_layout(fig, title=title, height=440)
 

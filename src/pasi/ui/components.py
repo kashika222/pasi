@@ -1,7 +1,12 @@
-"""Shared Streamlit UI helpers for the PASI research platform."""
+"""Shared Streamlit UI helpers for the PASI research platform.
+
+Visual language follows the Stitch Executive Insight System (consulting editorial).
+Does not invent scores — only presents pipeline outputs.
+"""
 
 from __future__ import annotations
 
+import html
 from typing import Any
 
 import streamlit as st
@@ -9,98 +14,135 @@ import streamlit as st
 from pasi.store import clear_repository_cache, ensure_store, get_repository, rebuild_store
 from pasi.viz import COLORS
 
+# Layout accents config.toml cannot express (evidence cards, kickers, quote rules).
 CUSTOM_CSS = f"""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=Libre+Baskerville:wght@400;700&display=swap');
-
-    html, body, [class*="css"]  {{
-        font-family: 'IBM Plex Sans', Helvetica, Arial, sans-serif;
-    }}
-    h1, h2, h3 {{
-        font-family: 'Libre Baskerville', Georgia, serif !important;
-        color: {COLORS['navy']} !important;
-        letter-spacing: -0.01em;
-    }}
     .block-container {{
-        padding-top: 1.5rem;
-        padding-bottom: 3rem;
-        max-width: 1200px;
+        padding-top: 2rem;
+        padding-bottom: 3.5rem;
+        max-width: 1140px;
     }}
 
-    /* Sidebar: navy chrome so nav links stay readable in light and dark themes */
     [data-testid="stSidebar"] {{
-        background: {COLORS['navy']} !important;
-        border-right: 1px solid rgba(255,255,255,0.08);
+        border-right: 1px solid {COLORS['mist']};
     }}
-    [data-testid="stSidebar"] * {{
-        color: #F4F6F8 !important;
-    }}
-    [data-testid="stSidebar"] a,
-    [data-testid="stSidebar"] span,
-    [data-testid="stSidebar"] p,
-    [data-testid="stSidebar"] label {{
-        color: #F4F6F8 !important;
-    }}
-    [data-testid="stSidebarNav"] a {{
-        background: transparent !important;
-        opacity: 1 !important;
-    }}
-    [data-testid="stSidebarNav"] a:hover,
     [data-testid="stSidebarNav"] a[aria-current="page"] {{
-        background: rgba(255,255,255,0.10) !important;
+        background: #CEE2F3 !important;
+        border-left: 3px solid {COLORS['navy']};
     }}
-    [data-testid="stSidebar"] .stButton > button {{
-        background: #F4F6F8 !important;
-        color: {COLORS['navy']} !important;
-        border: none !important;
-        font-weight: 600;
-    }}
-    [data-testid="stSidebar"] code {{
-        background: rgba(255,255,255,0.12) !important;
-        color: #D7ECE3 !important;
+    [data-testid="stSidebarNav"] a:hover {{
+        background: #EEEEEE !important;
     }}
 
+    .pasi-brand {{
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: {COLORS['steel']};
+        font-weight: 600;
+        margin-bottom: 0.15rem;
+    }}
+    .pasi-brand-title {{
+        font-family: 'Playfair Display', Georgia, serif;
+        font-size: 1.15rem;
+        color: {COLORS['navy']};
+        font-weight: 700;
+        margin: 0 0 1rem 0;
+        line-height: 1.3;
+    }}
     .pasi-kicker {{
         text-transform: uppercase;
         letter-spacing: 0.08em;
         font-size: 0.72rem;
         color: {COLORS['steel']};
         font-weight: 600;
-        margin-bottom: 0.35rem;
+        margin-bottom: 0.45rem;
     }}
-    .pasi-card {{
-        border: 1px solid {COLORS['mist']};
-        background: white;
-        padding: 1rem 1.1rem;
-        border-radius: 2px;
-        margin-bottom: 0.75rem;
+    .pasi-lede {{
+        color: {COLORS['slate']};
+        font-size: 1.05rem;
+        line-height: 1.65;
+        font-style: italic;
+        margin: 0.35rem 0 1.4rem 0;
     }}
     .pasi-muted {{
         color: {COLORS['slate']};
-        font-size: 0.95rem;
-        line-height: 1.55;
+        font-size: 0.98rem;
+        line-height: 1.6;
+    }}
+    .pasi-card {{
+        border: 1px solid {COLORS['mist']};
+        background: #FFFFFF;
+        padding: 1.15rem 1.25rem;
+        border-radius: 0;
+        margin-bottom: 0.85rem;
+    }}
+    .pasi-card-soft {{
+        border: 1px solid {COLORS['mist']};
+        background: {COLORS['paper']};
+        padding: 1.15rem 1.25rem;
+        border-radius: 0;
+        margin-bottom: 0.85rem;
     }}
     .pasi-quote {{
-        border-left: 3px solid {COLORS['accent']};
-        padding: 0.4rem 0 0.4rem 0.9rem;
-        margin: 0.5rem 0;
+        border-left: 3px solid {COLORS['navy']};
+        padding: 0.45rem 0 0.45rem 0.95rem;
+        margin: 0.55rem 0;
         color: {COLORS['slate']};
         font-style: italic;
+        background: {COLORS['paper']};
     }}
     .pasi-chain-step {{
-        font-size: 0.75rem;
+        font-size: 0.72rem;
         text-transform: uppercase;
-        letter-spacing: 0.06em;
+        letter-spacing: 0.07em;
         color: {COLORS['steel']};
-        margin-top: 0.6rem;
+        font-weight: 600;
+        margin-top: 0.75rem;
+    }}
+    .pasi-divider {{
+        border: none;
+        border-top: 1px solid {COLORS['mist']};
+        margin: 1.5rem 0;
+    }}
+    .pasi-ai-box {{
+        border: 1px solid {COLORS['mist']};
+        border-top: 3px solid {COLORS['navy']};
+        background: #FFFFFF;
+        padding: 1rem 1.15rem;
+        margin: 0.75rem 0 1rem 0;
+    }}
+    .pasi-ai-label {{
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: {COLORS['navy']};
+        font-weight: 700;
+        margin-bottom: 0.4rem;
+    }}
+    div[data-testid="stMetric"] {{
+        background: #FFFFFF;
+        border: 1px solid {COLORS['mist']};
+        padding: 0.85rem 1rem;
     }}
     div[data-testid="stMetricValue"] {{
-        font-family: 'Libre Baskerville', Georgia, serif;
+        font-family: 'Playfair Display', Georgia, serif;
         color: {COLORS['navy']};
-        font-size: 1.35rem !important;
     }}
     div[data-testid="stMetricLabel"] {{
         color: {COLORS['slate']};
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        font-size: 0.78rem !important;
+    }}
+    div[data-testid="stExpander"] {{
+        border: 1px solid {COLORS['mist']};
+        border-radius: 0 !important;
+        background: #FFFFFF;
+    }}
+    .stDownloadButton > button,
+    .stButton > button {{
+        border-radius: 0 !important;
     }}
 </style>
 """
@@ -118,7 +160,11 @@ def page_header(
     st.markdown(f"<div class='pasi-kicker'>{kicker}</div>", unsafe_allow_html=True)
     st.title(title)
     if subtitle:
-        st.markdown(f"<p class='pasi-muted'>{subtitle}</p>", unsafe_allow_html=True)
+        st.markdown(f"<p class='pasi-lede'>{subtitle}</p>", unsafe_allow_html=True)
+
+
+def section_label(text: str) -> None:
+    st.markdown(f"<div class='pasi-kicker'>{text}</div>", unsafe_allow_html=True)
 
 
 def missing_data_notice(message: str) -> None:
@@ -152,14 +198,37 @@ def render_source_refs(refs: list[dict[str, Any]]) -> None:
             st.caption(str(path))
 
 
+def render_ai_overview(text: str) -> None:
+    safe = html.escape(text).replace("\n", "<br/>")
+    st.markdown(
+        f"""
+<div class="pasi-ai-box">
+  <div class="pasi-ai-label">AI synthesized overview</div>
+  <div class="pasi-muted">{safe}</div>
+</div>
+""",
+        unsafe_allow_html=True,
+    )
+
+
 def sidebar_controls() -> None:
     """Workspace controls; ensure analytical store exists on first load."""
-    # Cloud / fresh clones: rebuild DuckDB from committed analyses + catalog.
     ensure_store()
 
-    st.sidebar.markdown("### Workspace")
+    st.sidebar.markdown(
+        "<div class='pasi-brand'>Enterprise analytics</div>"
+        "<div class='pasi-brand-title'>Research Console</div>",
+        unsafe_allow_html=True,
+    )
+
+    st.sidebar.markdown("##### Workspace")
     st.sidebar.caption("Rebuild indexes from `data/raw`, catalog, and `data/processed/ai`.")
-    if st.sidebar.button("Refresh analytical store", use_container_width=True):
+    if st.sidebar.button(
+        "Refresh analytical store",
+        type="primary",
+        width="stretch",
+        icon=":material/refresh:",
+    ):
         counts = rebuild_store()
         clear_repository_cache()
         st.sidebar.success(

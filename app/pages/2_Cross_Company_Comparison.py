@@ -6,7 +6,7 @@ import streamlit as st
 
 from pasi.services import comparison_payload, export_dimension_csv
 from pasi.store import get_repository
-from pasi.ui import inject_theme, missing_data_notice, page_header, sidebar_controls
+from pasi.ui import inject_theme, missing_data_notice, page_header, section_label, sidebar_controls
 from pasi.viz import distribution, grouped_bar, heatmap, multi_radar
 
 st.set_page_config(page_title="PASI | Comparison", layout="wide")
@@ -26,55 +26,60 @@ if companies.empty:
 
 name_to_id = dict(zip(companies["name"], companies["company_id"], strict=False))
 default = companies["name"].tolist()[:4]
-selected_names = st.multiselect(
-    "Companies to compare",
-    options=companies["name"].tolist(),
-    default=default,
-)
+
+filter_row, export_row = st.columns([1.4, 0.6], gap="large")
+with filter_row:
+    selected_names = st.multiselect(
+        "Companies to compare",
+        options=companies["name"].tolist(),
+        default=default,
+    )
+with export_row:
+    st.download_button(
+        "Download dimension CSV",
+        data=export_dimension_csv(repo),
+        file_name="pasi_dimension_scores.csv",
+        mime="text/csv",
+        icon=":material/download:",
+        width="stretch",
+    )
+
 selected_ids = [name_to_id[n] for n in selected_names]
-
 payload = comparison_payload(repo, selected_ids if selected_ids else None)
-
-st.download_button(
-    "Download processed dimension dataset (CSV)",
-    data=export_dimension_csv(repo),
-    file_name="pasi_dimension_scores.csv",
-    mime="text/csv",
-)
 
 if not payload["has_data"]:
     missing_data_notice(
         "No AI dimension scores are indexed yet. Analyze collected documents with "
         "`pasi analyze`, refresh the store, then return here."
     )
-    st.markdown("### Collection coverage")
-    st.dataframe(repo.coverage_summary(), use_container_width=True, hide_index=True)
+    section_label("Collection coverage")
+    st.dataframe(repo.coverage_summary(), width="stretch", hide_index=True)
     st.stop()
 
 long_df = payload["long"]
 matrix = payload["matrix"]
 
-st.markdown("### Radar comparison")
+section_label("Strategic framework alignment")
 st.plotly_chart(
     multi_radar(payload["radar"], title="Dimension scores by company"),
-    use_container_width=True,
+    width="stretch",
 )
 
-col_a, col_b = st.columns(2)
+col_a, col_b = st.columns(2, gap="large")
 with col_a:
-    st.markdown("### Heatmap")
+    section_label("Score heatmap")
     st.plotly_chart(
         heatmap(matrix, title="Company × dimension score heatmap"),
-        use_container_width=True,
+        width="stretch",
     )
 with col_b:
-    st.markdown("### Score distribution")
+    section_label("Score distribution")
     st.plotly_chart(
         distribution(long_df, x="score", title="Distribution of dimension scores"),
-        use_container_width=True,
+        width="stretch",
     )
 
-st.markdown("### Grouped comparison")
+section_label("Grouped comparison")
 st.plotly_chart(
     grouped_bar(
         long_df,
@@ -83,8 +88,8 @@ st.plotly_chart(
         color="company_name",
         title="Scores by dimension",
     ),
-    use_container_width=True,
+    width="stretch",
 )
 
-st.markdown("### Underlying matrix")
-st.dataframe(matrix.round(2), use_container_width=True)
+section_label("Underlying matrix")
+st.dataframe(matrix.round(2), width="stretch")

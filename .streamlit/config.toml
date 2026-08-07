@@ -1,10 +1,47 @@
 [theme]
 base = "light"
-primaryColor = "#1F2A44"
-backgroundColor = "#FFFFFF"
-secondaryBackgroundColor = "#F7F6F3"
-textColor = "#1A1A1A"
-font = "sans serif"
+primaryColor = "#002B49"
+backgroundColor = "#F9F9F9"
+secondaryBackgroundColor = "#F3F3F4"
+textColor = "#1A1C1C"
+linkColor = "#2E5D82"
+borderColor = "#D1D5DB"
+baseRadius = "none"
+buttonRadius = "none"
+showWidgetBorder = true
+
+font = "Source Sans 3:https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&display=swap"
+headingFont = "Playfair Display:https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap"
+
+headingFontSizes = ["2rem", "1.5rem", "1.25rem", "1.1rem", "1rem", "0.9rem"]
+headingFontWeights = [700, 700, 600, 600, 600, 600]
+
+dataframeBorderColor = "#D1D5DB"
+dataframeHeaderBackgroundColor = "#F3F3F4"
+
+chartCategoricalColors = ["#002B49", "#2E5D82", "#4E616F", "#7293B6", "#8A9BA8", "#B5C9DA"]
+chartSequentialColors = [
+  "#F8F9FA",
+  "#E8EEF4",
+  "#D1DCE8",
+  "#B5C9DA",
+  "#8A9BA8",
+  "#7293B6",
+  "#4E616F",
+  "#2E5D82",
+  "#002B49",
+  "#001629",
+]
+
+blueColor = "#2E5D82"
+grayColor = "#4E616F"
+redColor = "#9B2C2C"
+
+[theme.sidebar]
+backgroundColor = "#F8F9FA"
+secondaryBackgroundColor = "#EEEEEE"
+textColor = "#1A1C1C"
+borderColor = "#D1D5DB"
 
 [server]
 headless = true

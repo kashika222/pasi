@@ -10,8 +10,10 @@ from pasi.ui import (
     inject_theme,
     missing_data_notice,
     page_header,
+    render_ai_overview,
     render_evidence_quotes,
     render_source_refs,
+    section_label,
     sidebar_controls,
 )
 from pasi.viz import radar_chart
@@ -31,10 +33,13 @@ if companies.empty:
     st.error("No companies configured.")
     st.stop()
 
-# Search / select
 names = companies["name"].tolist()
 id_by_name = dict(zip(companies["name"], companies["company_id"], strict=False))
-query = st.text_input("Search companies", placeholder="Type a company name…")
+query = st.text_input(
+    "Search companies",
+    placeholder="Type a company name…",
+    label_visibility="collapsed",
+)
 filtered = [n for n in names if query.lower() in n.lower()] if query else names
 if not filtered:
     st.warning("No companies match your search.")
@@ -48,18 +53,19 @@ if profile.get("error"):
     st.stop()
 
 company = profile["company"]
-top1, top2, top3, top4 = st.columns(4)
-segment = company.get("segment") or "—"
-# Readable labels in metric tiles (avoid truncation + pandas NaN "nan")
 SEGMENT_LABELS = {
     "digital_product": "Digital product",
     "data_platform": "Data platform",
     "traditional_regulated": "Traditional / regulated",
 }
-top1.metric("Segment", SEGMENT_LABELS.get(str(segment), str(segment)))
-top2.metric("Industry", company.get("industry") or "—")
-top3.metric("Documents", int(company.get("document_count") or 0))
-top4.metric("AI analyses", int(company.get("analysis_count") or 0))
+segment = company.get("segment") or "—"
+
+section_label(f"{selected_name} analysis")
+top1, top2, top3, top4 = st.columns(4)
+top1.metric("Segment", SEGMENT_LABELS.get(str(segment), str(segment)), border=True)
+top2.metric("Industry", company.get("industry") or "—", border=True)
+top3.metric("Documents", int(company.get("document_count") or 0), border=True)
+top4.metric("AI analyses", int(company.get("analysis_count") or 0), border=True)
 
 notes = company.get("notes")
 if notes:
@@ -71,13 +77,23 @@ if not profile["has_documents"]:
         "Run `pasi collect`, then refresh the analytical store."
     )
 
-left, right = st.columns([1.05, 0.95])
+brief = executive_summary_text(profile)
+render_ai_overview(brief)
+st.download_button(
+    "Download executive brief",
+    data=brief,
+    file_name=f"{company_id}_executive_brief.txt",
+    mime="text/plain",
+    icon=":material/download:",
+)
+
+left, right = st.columns([1.05, 0.95], gap="large")
 with left:
-    st.markdown("### Signal profile")
+    section_label("Signal profile")
     if profile["radar_scores"]:
         st.plotly_chart(
             radar_chart(profile["radar_scores"], title=f"{selected_name} — AI dimensions"),
-            use_container_width=True,
+            width="stretch",
         )
     else:
         missing_data_notice(
@@ -85,43 +101,43 @@ with left:
         )
 
 with right:
-    st.markdown("### Executive brief")
-    brief = executive_summary_text(profile)
-    st.text_area("Deterministic summary from processed outputs", brief, height=260)
-    st.download_button(
-        "Download executive brief (.txt)",
-        data=brief,
-        file_name=f"{company_id}_executive_brief.txt",
-        mime="text/plain",
+    section_label("Framework categories")
+    st.caption(
+        "Leadership Commitment · Talent Investment · Strategic Communication · "
+        "Employee Perception · Innovation Signals"
     )
+    categories = profile["categories"]
+    cat_labels = [f"{c['label']} — {c['assessment']}" for c in categories]
+    choice = st.radio(
+        "Category",
+        options=cat_labels,
+        label_visibility="collapsed",
+    )
+    cat = categories[cat_labels.index(choice)]
 
-st.markdown("### Framework categories")
-st.caption(
-    "Leadership Commitment · Talent Investment · Strategic Communication · "
-    "Employee Perception · Innovation Signals"
-)
-
-for cat in profile["categories"]:
-    with st.expander(f"{cat['label']} — {cat['assessment']}", expanded=False):
+    with st.container(border=True):
+        st.markdown(f"### {cat['label']}")
         st.markdown(f"<p class='pasi-muted'>{cat['description']}</p>", unsafe_allow_html=True)
         m1, m2, m3 = st.columns(3)
-        m1.metric("Assessment", cat["assessment"])
+        m1.metric("Assessment", cat["assessment"], border=True)
         m2.metric(
             "Score (0–2)",
             f"{cat['score']:.2f}" if cat["score"] is not None else "n/a",
+            border=True,
         )
         m3.metric(
             "Confidence",
             f"{cat['confidence']:.2f}" if cat["confidence"] is not None else "n/a",
+            border=True,
         )
 
-        st.markdown("**AI summary**")
+        section_label("AI summary")
         st.write(cat["ai_summary"])
 
-        st.markdown("**Supporting evidence**")
+        section_label("Supporting evidence")
         render_evidence_quotes(cat["evidence_quotes"])
 
-        st.markdown("**Source references**")
+        section_label("Source references")
         render_source_refs(cat["document_refs"])
         if cat["source_types"]:
             st.caption("Scored from source types: " + ", ".join(cat["source_types"]))
