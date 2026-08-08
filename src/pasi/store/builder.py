@@ -8,6 +8,8 @@ from __future__ import annotations
 
 import json
 import os
+import threading
+import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -20,6 +22,9 @@ from pasi.ingest.companies import load_companies
 from pasi.logging.setup import get_logger
 
 logger = get_logger(__name__)
+
+# Streamlit Cloud can hit ensure_store/rebuild from concurrent sessions.
+_STORE_LOCK = threading.RLock()
 
 
 def _is_streamlit_cloud() -> bool:
@@ -131,34 +136,71 @@ def connect(settings: Settings | None = None, *, read_only: bool = False) -> duc
         raise
 
 
+def _remove_db_files(path: Path) -> None:
+    """Delete DuckDB file and sidecar WAL/temp files if present."""
+    for candidate in (path, Path(f"{path}.wal"), Path(f"{path}.tmp")):
+        try:
+            if candidate.exists():
+                candidate.unlink()
+        except OSError as exc:
+            logger.warning("Could not remove %s: %s", candidate, exc)
+
+
+def _apply_ddl(con: duckdb.DuckDBPyConnection) -> None:
+    """Run schema DDL one statement at a time.
+
+    DuckDB ``execute()`` rejects multi-statement scripts with TransactionException.
+    """
+    for stmt in DDL.split(";"):
+        cleaned = stmt.strip()
+        if cleaned:
+            con.execute(cleaned)
+
+
 def rebuild_store(settings: Settings | None = None) -> dict[str, int]:
     """Scan ``data/raw`` and ``data/processed/ai`` and rebuild the DuckDB mart."""
     settings = settings or get_settings()
     path = duckdb_path(settings)
-    if path.exists():
-        path.unlink()
+    last_error: Exception | None = None
 
-    con = connect(settings=settings, read_only=False)
-    try:
-        con.execute(DDL)
-        counts = {
-            "companies": _load_companies(con, settings),
-            "documents": _load_documents(con, settings),
-            "analyses": 0,
-            "dimension_scores": 0,
-            "evidence_items": 0,
-        }
-        a_counts = _load_analyses(con, settings)
-        counts.update(a_counts)
-        con.execute("DELETE FROM pipeline_meta")
-        con.execute(
-            "INSERT INTO pipeline_meta VALUES ('built_at', ?), ('schema_version', '1.0')",
-            [datetime.now(timezone.utc).isoformat()],
-        )
-        logger.info("Rebuilt PASI store at %s (%s)", path, counts)
-        return counts
-    finally:
-        con.close()
+    with _STORE_LOCK:
+        for attempt in range(1, 4):
+            _remove_db_files(path)
+            con = None
+            try:
+                con = connect(settings=settings, read_only=False)
+                _apply_ddl(con)
+                counts = {
+                    "companies": _load_companies(con, settings),
+                    "documents": _load_documents(con, settings),
+                    "analyses": 0,
+                    "dimension_scores": 0,
+                    "evidence_items": 0,
+                }
+                a_counts = _load_analyses(con, settings)
+                counts.update(a_counts)
+                con.execute("DELETE FROM pipeline_meta")
+                con.execute(
+                    "INSERT INTO pipeline_meta VALUES ('built_at', ?), ('schema_version', '1.0')",
+                    [datetime.now(timezone.utc).isoformat()],
+                )
+                logger.info("Rebuilt PASI store at %s (%s)", path, counts)
+                return counts
+            except duckdb.Error as exc:
+                last_error = exc
+                logger.warning("DuckDB rebuild attempt %s/3 failed: %s", attempt, exc)
+                time.sleep(0.2 * attempt)
+            finally:
+                if con is not None:
+                    try:
+                        con.close()
+                    except duckdb.Error:
+                        pass
+                if last_error is not None and attempt < 3:
+                    _remove_db_files(path)
+
+        assert last_error is not None
+        raise last_error
 
 
 def _load_companies(con: duckdb.DuckDBPyConnection, settings: Settings) -> int:
@@ -411,16 +453,19 @@ def ensure_store(settings: Settings | None = None) -> Path:
     """Rebuild store if missing or unreadable; return path."""
     settings = settings or get_settings()
     path = duckdb_path(settings)
-    if not path.exists():
+
+    with _STORE_LOCK:
+        if path.exists():
+            try:
+                con = connect(settings=settings, read_only=False)
+                try:
+                    con.execute("SELECT 1 FROM pipeline_meta LIMIT 1")
+                    return path
+                finally:
+                    con.close()
+            except duckdb.Error as exc:
+                logger.warning("Existing DuckDB store unreadable (%s); rebuilding", exc)
+                _remove_db_files(path)
+
         rebuild_store(settings=settings)
         return path
-    try:
-        con = connect(settings=settings, read_only=False)
-        try:
-            con.execute("SELECT 1 FROM pipeline_meta LIMIT 1")
-        finally:
-            con.close()
-    except duckdb.Error as exc:
-        logger.warning("Existing DuckDB store unreadable (%s); rebuilding", exc)
-        rebuild_store(settings=settings)
-    return path
